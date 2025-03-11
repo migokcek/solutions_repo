@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forced Damped Pendulum Simulation</title>
+    <style>
+        canvas { background: #f4f4f4; display: block; margin: auto; }
+    </style>
+</head>
+<body>
+    <canvas id="pendulumCanvas" width="600" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById("pendulumCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let theta = Math.PI / 4;
+        let omega = 0;
+        let alpha = 0;
+        let length = 150;
+        let gravity = 0.98;
+        let damping = 0.01;
+        let force = 0.5;
+        let drivingFrequency = 0.05;
+        let time = 0;
+
+        function drawPendulum() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let x = canvas.width / 2 + length * Math.sin(theta);
+            let y = 100 + length * Math.cos(theta);
+            
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 100);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function updatePendulum() {
+            alpha = -gravity / length * Math.sin(theta) - damping * omega + force * Math.cos(drivingFrequency * time);
+            omega += alpha;
+            theta += omega;
+            time += 0.1;
+            drawPendulum();
+            requestAnimationFrame(updatePendulum);
+        }
+
+        updatePendulum();
+    </script>
+</body>
+</html>
