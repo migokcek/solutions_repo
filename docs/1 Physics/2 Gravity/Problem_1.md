@@ -41,7 +41,7 @@ To verify Kepler’s Third Law computationally, we simulate a planetary orbit an
 
 ### 3.1 Simulating Orbital Motion
 
-<!-- ```python
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -77,16 +77,16 @@ def animate(i):
 ani = animation.FuncAnimation(fig, animate, frames=len(t), interval=20, blit=True)
 plt.legend()
 plt.show()
-``` -->
+```
 
 
 ![Kepler's Law Verification](orbit_motion.png)
 
 #### 3.2 Graphical Analysis of Kepler’s Third Law
 
-Now, let's numerically verify Kepler’s Third Law by simulating different orbital radii and comparing \( T^2 \) vs. \( r^3 \).
+Now, let's numerically verify Kepler’s Third Law by simulating different orbital radii and comparing \( T^2 \) vs. \( r^3 \):
 
-<!-- ```python
+```python
 # Simulating multiple orbital radii and periods
 radii = np.linspace(0.5e11, 3e11, 10)  # Varying radii from 0.5 AU to 3 AU
 periods = np.sqrt((4 * np.pi**2 * radii**3) / (G * M_sun))
@@ -100,7 +100,7 @@ plt.title("Verification of Kepler's Third Law")
 plt.legend()
 plt.grid()
 plt.show()
-``` -->
+```
 
 Below is the graphical verification of Kepler’s Third Law:
 

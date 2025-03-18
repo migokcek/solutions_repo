@@ -40,15 +40,66 @@ where \(I\) is the moment of inertia, \(m\) is the mass, and \(L\) is the length
 
 ## 3. Numerical Simulation
 
-### Generated Plot
+We implement a numerical solver using Python to visualize the behavior of the forced damped pendulum.
 
-The motion of the forced damped pendulum is illustrated in the following graph:
+### 3.1 Solving the Equation of Motion
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+def pendulum_eq(t, y, gamma, omega0, A, omega):
+    theta, omega_dot = y
+    dydt = [omega_dot, -gamma * omega_dot - omega0**2 * np.sin(theta) + A * np.cos(omega * t)]
+    return dydt
+
+# Parameters
+gamma = 0.2  # Damping coefficient
+omega0 = 1.5  # Natural frequency
+A = 1.2  # Forcing amplitude
+omega = 2.0  # Driving frequency
+
+# Initial conditions and time range
+y0 = [0.2, 0.0]
+t_span = (0, 50)
+t_eval = np.linspace(*t_span, 1000)
+
+sol = solve_ivp(pendulum_eq, t_span, y0, t_eval=t_eval, args=(gamma, omega0, A, omega))
+
+# Plot results
+plt.figure(figsize=(8, 5))
+plt.plot(sol.t, sol.y[0], label='Angular Displacement')
+plt.xlabel('Time (s)')
+plt.ylabel('Theta (rad)')
+plt.title('Forced Damped Pendulum Motion')
+plt.legend()
+plt.grid()
+plt.savefig('forced_pendulum.png')
+plt.show()
+```
+
+### Generated Plot
 
 ![Forced Damped Pendulum](forced_pendulum.png)
 
-### Phase Space Representation
+### 3.2 Phase Space Representation
 
 To better understand the motion of the system, we visualize its phase space (angular displacement vs. angular velocity):
+
+```python
+plt.figure(figsize=(8, 5))
+plt.plot(sol.y[0], sol.y[1], label='Phase Space')
+plt.xlabel('Theta (rad)')
+plt.ylabel('Angular Velocity (rad/s)')
+plt.title('Phase Space of the Forced Damped Pendulum')
+plt.legend()
+plt.grid()
+plt.savefig('phase_space.png')
+plt.show()
+```
+
+### Phase Space Plot
 
 ![Phase Space](phase_space.png)
 

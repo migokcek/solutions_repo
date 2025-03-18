@@ -39,15 +39,72 @@ Projectile motion analysis is widely used in various fields:
 
 ## 4. Implementation
 
+Below is a Python script to visualize the range as a function of the projection angle:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def projectile_range(v0, g):
+    angles = np.linspace(0, 90, 100)
+    radians = np.radians(angles)
+    ranges = (v0**2 * np.sin(2 * radians)) / g
+    return angles, ranges
+
+v0 = 20  # Initial velocity in m/s
+g = 9.81  # Gravity in m/s²
+angles, ranges = projectile_range(v0, g)
+
+plt.figure(figsize=(8, 5))
+plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+plt.xlabel('Angle (degrees)')
+plt.ylabel('Range (m)')
+plt.title('Projectile Range as a Function of Angle')
+plt.legend()
+plt.grid()
+plt.savefig('range_vs_angle.png')  # Save the figure
+plt.show()
+```
+
 ### Generated Plot
 
-The relationship between projectile range and angle can be visualized in the following graph:
+The script generates the following plot:
 
 ![Projectile Range vs Angle](range_vs_angle.png)
 
 ### Alternative Visualization
 
-A second visualization shows projectile trajectories for different angles:
+To visualize projectile trajectories at different angles, we use another script:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def projectile_trajectory(v0, theta, g, t_max=2):
+    t = np.linspace(0, t_max, num=100)
+    theta_rad = np.radians(theta)
+    x = v0 * np.cos(theta_rad) * t
+    y = v0 * np.sin(theta_rad) * t - 0.5 * g * t**2
+    return x, y
+
+angles = [30, 45, 60]
+v0 = 20
+g = 9.81
+plt.figure(figsize=(8, 5))
+for angle in angles:
+    x, y = projectile_trajectory(v0, angle, g)
+    plt.plot(x, y, label=f'θ = {angle}°')
+
+plt.xlabel('Horizontal Distance (m)')
+plt.ylabel('Vertical Height (m)')
+plt.title('Projectile Trajectories at Different Angles')
+plt.legend()
+plt.grid()
+plt.savefig('trajectories.png')
+plt.show()
+```
+
+### Generated Plot
 
 ![Projectile Trajectories](trajectories.png)
 
